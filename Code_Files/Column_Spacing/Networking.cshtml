@@ -1,0 +1,65 @@
+﻿@model IEnumerable<JPDash.Models.JPHire>
+
+
+@{
+    ViewBag.Title = "Networking";
+}
+
+<h2>Networking</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr class="d-flex">
+        <th class="col-md-2">
+            @Html.DisplayNameFor(model => model.JPStudent.JPName)
+        </th>
+        <th class="col-md-2">
+            @Html.DisplayNameFor(model => model.JPCompanyName)
+        </th>
+        <th class="col-md-2">
+            @Html.DisplayNameFor(model => model.JPJobTitle)
+        </th>
+        <th class="col-md-2">
+            @Html.DisplayNameFor(model => model.JPJobCategory)
+        </th>
+        <th class="col-md-2">
+            Work Location
+        </th>
+        <th class="col-md-2">
+            @Html.DisplayNameFor(model => model.JPHireDate)
+        </th>
+        <th class="col-md-1">
+            @Html.DisplayNameFor(model => model.JPStudent.JPLinkedIn)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="d-flex">
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.JPStudent.JPName)
+            </td>
+            <td class="col-md-2">
+                <a href="http://@Html.ExternalLink(item.JPCareersPage)" target="_blank">@Html.DisplayFor(modelItem => item.JPCompanyName)</a>
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.JPJobTitle)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.JPJobCategory)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.JPCompanyCity), 
+                @Html.DisplayFor(modelItem => item.JPCompanyState)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.JPHireDateNoTimeStamp)
+            </td>
+        </tr>
+    }
+
+</table>
+
+

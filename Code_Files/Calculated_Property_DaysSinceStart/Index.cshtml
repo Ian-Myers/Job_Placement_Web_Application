@@ -1,0 +1,97 @@
+﻿@model IEnumerable<JPDash.Models.JPStudent>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>&nbsp;&nbsp;Student Information</h3>
+<p><br /> <br /><br /></p>
+<p>
+    @Html.ActionLink("Create New Student Job Placement Account", "Create")
+</p>
+<br />
+
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name or location: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+    
+}
+<table class="table">
+    <tr>
+        <th>
+           @Html.DisplayNameFor(model => model.JPStudentId)
+        </th>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPEmail)
+        </th>
+        <th>
+           @Html.ActionLink("Location", "Index", new { sortOrder = ViewBag.LocationSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPLinkedIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPPortfolio)
+        </th>
+        <th></th>
+    </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.JPStudentId)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JPName)
+                </td>
+                <td>
+                    <a href="mailto: @Html.DisplayFor(modelItem => item.JPEmail)">@Html.DisplayFor(modelItem => item.JPEmail)</a>
+                </td>
+                <td>
+                    @functions {
+                        public string returnWithSpaces(string location)
+                        {
+                            string newString = System.Text.RegularExpressions.Regex.Replace(location, "[A-Z]", " $0");
+                            newString = newString.Trim();
+                            return newString;
+                        }
+                    }
+                    @{
+                        var testString = item.JPStudentLocation.ToString();
+                        var newString = returnWithSpaces(testString);
+                    }
+                    @Html.DisplayFor(modelItem => newString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DaysSinceStart)
+                </td>
+                <td>
+                    <a href="http://@Html.ExternalLink(item.JPLinkedIn)" target="_blank">LinkedIn Profile</a>
+                </td>
+                <td>
+                    <a href="http://@Html.ExternalLink(item.JPPortfolio)" target="_blank">Student Portfolio</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.JPStudentId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.JPStudentId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.JPStudentId })
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    <div style="margin-left: 50px">
+        @Html.ActionLink("Export Student Email Addresses", "Result", null, new { @class = "btn btn-primary" })
+    </div>
+    <br />

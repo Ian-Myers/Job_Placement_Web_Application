@@ -1,0 +1,71 @@
+﻿@model IEnumerable<JPDash.Models.JPHire>
+
+@{
+    ViewBag.Title = "Networking";
+}
+
+<h2>Networking</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JPStudent.JPName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPCompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPJobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPJobCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPCompanyCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPCompanyState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPHireDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JPStudent.JPLinkedIn)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.JPStudent.JPName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JPCompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JPJobTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JPJobCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JPCompanyCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JPCompanyState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JPHireDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.JPHireId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.JPHireId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.JPHireId })
+        </td>
+    </tr>
+}
+
+</table>

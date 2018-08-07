@@ -1,0 +1,106 @@
+﻿@model IEnumerable<JPDash.ViewModels.JPStudentRundown>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>&nbsp;&nbsp;Weekly Applications</h3>
+<p><br /> <br /><br /></p>
+
+@using (Html.BeginForm())
+{
+
+    <div class="form-group row">
+        <div class="col-md-offest-3 col-md-6 text-center">
+            <p>
+                Find by name or location: @Html.TextBox("SearchString")
+                <input type="submit" value="Search"/>
+            </p>
+        </div>
+        <div class="col-md-offest-10 col-md-6 text-center">
+            <button type="button">
+                @Html.ActionLink("Ready To Graduate", "Index", new { sortOrder = ViewBag.GraduateSortParm })
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jpstudent.JPEmail)
+        </th>
+        <th>
+            @Html.ActionLink("Location", "Index", new { sortOrder = ViewBag.LocationSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jpstudent.JPLinkedIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jpstudent.JPPortfolio)
+        </th>
+        <th>
+            Total <br />
+            Applications
+        </th>
+        <th>
+            Weekly <br />
+            Applications
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.jpstudent.JPName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.jpstudent.JPEmail)
+        </td>
+        <td>
+            @functions {
+                public string returnWithSpaces(string location)
+                {
+                    string newString = System.Text.RegularExpressions.Regex.Replace(location, "[A-Z]", " $0");
+                    newString = newString.Trim();
+                    return newString;
+                }
+            }
+            @{
+                var testString = item.JPStudentLocation.ToString();
+                var newString = returnWithSpaces(testString);
+            }
+            @Html.DisplayFor(modelItem => newString)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.jpstudent.JPStartDate)
+        </td>
+        <td>
+            <a href="http://@Html.ExternalLink(item.jpstudent.JPLinkedIn)" target="_blank">LinkedIn Profile</a>
+        </td>
+        <td>
+            <a href="http://@Html.ExternalLink(item.jpstudent.JPPortfolio)" target="_blank">Student Portfolio</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalApplications)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalApplicationsThisWeek)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+    }
+
+</table>
